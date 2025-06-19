@@ -1,16 +1,69 @@
-# flutter_friend_app
+# 👥 Flutter Friend App
 
-A new Flutter project.
+A beautiful Flutter app for making and managing friends, sending/accepting friend requests, chatting with accepted friends, and managing profiles — powered by Firebase.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📸 Features
 
-A few resources to get you started if this is your first Flutter project:
+✅ User profile creation (name, bio, profile pic)  
+✅ Send & accept friend requests  
+✅ See friends list with full info  
+✅ Real-time private chat with accepted friends  
+✅ Firebase authentication (email/password)  
+✅ Cloud Firestore for user & chat data  
+✅ Light Blue UI theme with images  
+✅ Logout button in every screen  
+✅ Responsive design for mobile & web
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠️ Requirements
+
+| Tool                     | Version (recommended) |
+|--------------------------|------------------------|
+| Flutter SDK              | `>=3.10.0`             |
+| Dart SDK                 | `>=3.0.0`              |
+| Firebase account         | Any                    |
+| Android Studio / VS Code | Latest                 |
+| Git                      | Any recent version     |
+| Chrome                   | Latest (for web)       |
+
+---
+
+## 🚀 Setup Instructions
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/Manjushree296/flutter_friend_app.git
+cd flutter_friend_app
+# 👥 Flutter Friend App
+
+
+3️⃣ Set Up Firebase
+Go to Firebase Console
+
+Create a new Firebase project
+
+Add an app (Web, Android, etc.)
+
+Enable Firebase services:
+
+Authentication > Sign-in method > Email/Password
+
+Firestore Database > Start in test mode
+
+Storage (optional, for profile images)
+
+Install CLI (once):
+
+dart pub global activate flutterfire_cli
+Configure Firebase:
+
+flutterfire configure
+This will auto-generate lib/firebase_options.dart.
+
+4️⃣ Run the App
+bash
+flutter run -d chrome 
