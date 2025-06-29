@@ -65,5 +65,4 @@ flutterfire configure
 This will auto-generate lib/firebase_options.dart.
 
 4️⃣ Run the App
-bash
 flutter run -d chrome 
