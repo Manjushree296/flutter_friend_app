@@ -1,7 +1,7 @@
-// ======================== friends_screen.dart ========================
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'private_chat_screen.dart'; // You'll create this screen next
 
 class FriendsScreen extends StatelessWidget {
   final String currentUserId = FirebaseAuth.instance.currentUser!.uid;
@@ -18,6 +18,7 @@ class FriendsScreen extends StatelessWidget {
           await FirebaseFirestore.instance.collection('users').doc(uid).get();
       if (friendDoc.exists) {
         friends.add({
+          'uid': uid,
           'name': friendDoc['name'] ?? 'No Name',
           'bio': friendDoc['bio'] ?? '',
           'profilePic': friendDoc['profilePic'] ?? '',
@@ -61,15 +62,43 @@ class FriendsScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               final friend = friends[index];
               return Card(
-                margin: EdgeInsets.all(8),
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                elevation: 3,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: ListTile(
                   leading: CircleAvatar(
+                    radius: 28,
                     backgroundImage: friend['profilePic'].isNotEmpty
                         ? NetworkImage(friend['profilePic'])
                         : AssetImage('assets/default_profile.png') as ImageProvider,
                   ),
-                  title: Text(friend['name']),
+                  title: Text(
+                    friend['name'],
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                   subtitle: Text(friend['bio']),
+                  trailing: ElevatedButton.icon(
+                    icon: Icon(Icons.chat_bubble, size: 18),
+                    label: Text("Chat"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => PrivateChatScreen(
+                            friendId: friend['uid'],
+                            friendName: friend['name'],
+                            friendPhoto: friend['profilePic'],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             },

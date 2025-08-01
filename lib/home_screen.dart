@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'profile_screen.dart';
 import 'user_list_screen.dart';
 import 'friend_requests_screen.dart';
 import 'friends_screen.dart';
@@ -10,82 +9,108 @@ import 'chat_screen.dart';
 class HomeScreen extends StatelessWidget {
   void _logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => AuthScreen()));
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => AuthScreen()));
   }
+
+  final List<_DashboardItem> items = [
+    _DashboardItem('All Users', Icons.group_rounded, UserListScreen()),
+    _DashboardItem(
+      'Friend Requests',
+      Icons.mail_outline_rounded,
+      FriendRequestsScreen(),
+    ),
+    _DashboardItem('My Friends', Icons.people_alt_rounded, FriendsScreen()),
+    _DashboardItem(
+      'Chat with Friends',
+      Icons.chat_bubble_outline_rounded,
+      ChatScreen(),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0f172a), // dark blue-gray
       appBar: AppBar(
-        backgroundColor: Colors.blue[800],
-        title: Text('Friend App Home'),
+        backgroundColor: const Color(0xFF1e293b),
+        elevation: 0,
+        title: const Text('Friend App', style: TextStyle(color: Colors.white)),
+        centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.logout, size: 30),
-            tooltip: 'Logout',
+            icon: const Icon(Icons.logout, color: Colors.white),
             onPressed: () => _logout(context),
           ),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.lightBlue.shade200, Colors.blue.shade700],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            colors: [Color(0xFF1e293b), Color(0xFF0f172a)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: NetworkImage(
-                'https://cdn.pixabay.com/photo/2017/02/01/22/02/friends-2037327_960_720.png',
-              ),
+        child: SafeArea(
+          child: Scrollbar(
+            thumbVisibility: true,
+            radius: const Radius.circular(8),
+            thickness: 5,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(16),
+              itemCount: items.length,
+              itemBuilder: (context, index) =>
+                  _buildCard(context, items[index]),
             ),
-            SizedBox(height: 10),
-            Text(
-              'Welcome, Friend!',
-              style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              '"Friendship is the golden thread that ties the heart of all the world."',
-              style: TextStyle(fontSize: 16, color: Colors.white70, fontStyle: FontStyle.italic),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.all(16),
-                children: [
-                  _buildHomeTile(context, 'My Profile', Icons.person, ProfileScreen()),
-                  _buildHomeTile(context, 'All Users', Icons.group, UserListScreen()),
-                  _buildHomeTile(context, 'Friend Requests', Icons.mail, FriendRequestsScreen()),
-                  _buildHomeTile(context, 'My Friends', Icons.people_alt, FriendsScreen()),
-                  _buildHomeTile(context, 'Chat with Friends', Icons.chat, ChatScreen()),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildHomeTile(BuildContext context, String title, IconData icon, Widget page) {
+  Widget _buildCard(BuildContext context, _DashboardItem item) {
     return Card(
-      color: Colors.white,
+      color: const Color(0xFF334155),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      margin: EdgeInsets.symmetric(vertical: 8),
+      elevation: 6,
+      margin: const EdgeInsets.symmetric(vertical: 10),
       child: ListTile(
-        leading: Icon(icon, color: Colors.blue),
-        title: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
-        trailing: Icon(Icons.arrow_forward_ios),
-        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => page)),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 16,
+        ),
+        leading: CircleAvatar(
+          radius: 26,
+          backgroundColor: const Color(0xFF3b82f6),
+          child: Icon(item.icon, size: 30, color: Colors.white),
+        ),
+        title: Text(
+          item.title,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+        trailing: const Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: Colors.white70,
+        ),
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => item.page),
+        ),
       ),
     );
   }
+}
+
+class _DashboardItem {
+  final String title;
+  final IconData icon;
+  final Widget page;
+
+  _DashboardItem(this.title, this.icon, this.page);
 }

@@ -1,26 +1,50 @@
-<!-- web/index.html -->
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
     <title>Flutter Friend App</title>
+    <meta name="description" content="Friend App built with Flutter Web and Firebase" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Firebase JS SDKs -->
     <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js"></script>
 
+    <!-- Firebase Configuration -->
     <script>
       const firebaseConfig = {
-        apiKey: "AIzaSyDeU1PH61nr41VPBxOHqm0YWwcgAJPRKHw",
-        authDomain: "flutter-project-1fbb5.firebaseapp.com",
-        projectId: "flutter-project-1fbb5",
-        storageBucket: "flutter-project-1fbb5.appspot.com",
-        messagingSenderId: "784683648808",
-        appId: "1:784683648808:web:e91db4d84028ef4e43f21d"
-      };
+  apiKey: "AIzaSyABQx3Xh_LkMJc5Te1FHyCQWjEVj9Sj_3E",
+  authDomain: "friend-4132a.firebaseapp.com",
+  projectId: "friend-4132a",
+  storageBucket: "friend-4132a.firebasestorage.app",
+  messagingSenderId: "244537942251",
+  appId: "1:244537942251:web:2122ab86d8536f5d705eae"
+};
+
+      // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
     </script>
+
+    <!-- Flutter Web App Loader -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      // Flutter Web App Loading Spinner (optional)
+      window.addEventListener('load', function () {
+        const loader = document.getElementById('loading-indicator');
+        if (loader) loader.style.display = 'none';
+      });
+    </script>
   </head>
+
   <body>
+    <!-- Optional loading screen while Flutter app loads -->
+    <div id="loading-indicator" style="text-align: center; padding: 50px;">
+      <p>Loading Friend App...</p>
+    </div>
+
+    <!-- Flutter main entry point -->
     <script src="main.dart.js" type="application/javascript"></script>
   </body>
 </html>
