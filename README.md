@@ -6,9 +6,9 @@ A beautiful Flutter app for making and managing friends, sending/accepting frien
 
 ## 📸 Features
 
-✅ User profile creation (name, bio, profile pic)  
+✅ User register and login  
 ✅ Send & accept friend requests  
-✅ See friends list with full info  
+✅ See friends list and chat with them  
 ✅ Real-time private chat with accepted friends  
 ✅ Firebase authentication (email/password)  
 ✅ Cloud Firestore for user & chat data  
